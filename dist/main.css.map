@@ -1,0 +1,1 @@
+{"version":3,"file":"main.css","mappings":";;;AAAA,EACI,SACJ,CACA,mBACI,SAEJ,CAHA,cACI,SAEJ,C","sources":["webpack:///./style/index.scss"],"sourcesContent":["p{\n    color: red;\n}\n::placeholder{\n    color: red;\n}"],"names":[],"sourceRoot":""}
