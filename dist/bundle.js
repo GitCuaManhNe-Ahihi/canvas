@@ -44,11 +44,12 @@ function Particles() {
     var ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    // eslint-disable-next-line no-use-before-define
     var particlesArray;
     var mouse = {
         x: null,
         y: null,
-        radius: (canvas.height / 80) * (canvas.width / 80)
+        radius: (canvas.height / 80) * (canvas.width / 80),
     };
     window.addEventListener('mousemove', function (e) {
         mouse.x = e.x;
@@ -67,7 +68,7 @@ function Particles() {
             if (ctx) {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-                ctx.fillStyle = '#8C5523';
+                ctx.fillStyle = "rbga(12,222,123,1)";
                 ctx.fill();
             }
         };
@@ -103,37 +104,19 @@ function Particles() {
         };
         return Particle;
     }());
-    function init() {
-        particlesArray = [];
-        var numberOfParticles = (canvas.height * canvas.width) / 9000;
-        for (var i = 0; i < numberOfParticles; i++) {
-            var size = (Math.random() * 5) + 1;
-            var x = (Math.random() * ((innerWidth - size * 2) - (size * 2) + (size * 2)));
-            var y = (Math.random() * ((innerHeight - size * 2) - (size * 2) + (size * 2)));
-            var directionX = (Math.random() * 5) - 2.5;
-            var directionY = (Math.random() * 5) - 2.5;
-            var color = '#8c5523';
-            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-        }
-    }
-    function animate() {
-        requestAnimationFrame(animate);
-        ctx === null || ctx === void 0 ? void 0 : ctx.clearRect(0, 0, innerWidth, innerHeight);
-        for (var i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-        }
-        connect();
-    }
     function connect() {
         var opacity = 1;
-        for (var i = 0; i < particlesArray.length; i++) {
+        for (var i = 0; i < particlesArray.length; i += 1) {
+            // eslint-disable-next-line no-plusplus
             for (var j = 0; j < particlesArray.length; j++) {
-                var distance = (((particlesArray[i].x - particlesArray[j].x) * (particlesArray[i].x - particlesArray[j].x))
-                    + ((particlesArray[i].y - particlesArray[j].y) * (particlesArray[i].y - particlesArray[j].y)));
-                if (Math.abs(distance) < ((canvas.width / 7) * (canvas.height / 7))) {
+                var distance = (particlesArray[i].x - particlesArray[j].x) *
+                    (particlesArray[i].x - particlesArray[j].x) +
+                    (particlesArray[i].y - particlesArray[j].y) *
+                        (particlesArray[i].y - particlesArray[j].y);
+                if (Math.abs(distance) < (canvas.width / 7) * (canvas.height / 7)) {
                     if (ctx) {
-                        opacity = 1 - distance / 2000;
-                        ctx.strokeStyle = "rbga(140,58,31,".concat(opacity, ")");
+                        opacity = 1 - distance / 20000;
+                        ctx.strokeStyle = "rbga(112,45,223,".concat(opacity, ")");
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
@@ -143,6 +126,28 @@ function Particles() {
                 }
             }
         }
+    }
+    function init() {
+        particlesArray = [];
+        var numberOfParticles = (canvas.height * canvas.width) / 5000;
+        // eslint-disable-next-line no-plusplus
+        for (var i = 0; i < numberOfParticles; i++) {
+            var size = Math.random() * 5 + 1;
+            var x = Math.random() * (window.innerWidth - size * 2 - size * 2 + size * 2);
+            var y = Math.random() * (window.innerHeight - size * 2 - size * 2 + size * 2);
+            var directionX = Math.random() * 5 - 2.5;
+            var directionY = Math.random() * 5 - 2.5;
+            var color = '#8c5523';
+            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+        }
+    }
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx === null || ctx === void 0 ? void 0 : ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        for (var i = 0; i < particlesArray.length; i += 1) {
+            particlesArray[i].update();
+        }
+        connect();
     }
     init();
     window.addEventListener('resize', function () {
