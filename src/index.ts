@@ -1,1 +1,3 @@
-console.log('hello')
+import Particles from "./particles";
+
+Particles()
