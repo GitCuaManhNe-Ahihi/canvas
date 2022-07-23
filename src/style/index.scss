@@ -1,6 +1,13 @@
-p{
-    color: red;
+*{
+    margin: 0;
+    pading: 0;
+    box-sizing: border-box;
 }
-::placeholder{
-    color: red;
+#canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(#ffdddd,#31aaaa);
 }

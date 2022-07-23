@@ -1,14 +1,23 @@
 const path = require('path')
 const MinicssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+
 module.exports = {
     mode: 'development',
     devtool:'source-map',
     context: path.resolve(__dirname,'src'),
     entry:['./style/index.scss','./index.ts'],
+    devServer: {
+        port:8000,
+        open: {
+          target: ['index.html', 'http://localhost:8080/index.html'],
+        },
+      },
     module:{
         rules:[
             {
-                test: /\.s[ac]ss$/i,
+            test: /\.s[ac]ss$/i,
             exclude: /node_modules/,
             use:[
                 MinicssExtractPlugin.loader,
@@ -24,10 +33,11 @@ module.exports = {
             ]
             },
             {
-                test: /\.ts$/i,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            }
+            test: /\.ts$/i,
+            use: 'ts-loader',
+            exclude: /node_modules/,
+            },
+            
             ]
     },
     resolve: {
@@ -40,6 +50,9 @@ module.exports = {
     plugins: [
         new MinicssExtractPlugin({
             filename: '[name].css'
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: '../index.html'
+          })
     ]
 }
